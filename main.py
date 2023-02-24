@@ -5,37 +5,21 @@ img = cv.imread('test-2.jpg')
 
 cv.imshow('img',img)
 
-# imgB = img.copy()
-# imgB[:,:,1] = 0
-# imgB[:,:,2] = 0
-# cv.imshow('imgB',imgB)
-
-# imgR = img.copy()
-# imgR[:,:,1] = 0
-# imgR[:,:,0] = 0
-# cv.imshow('imgR',imgR)
-
-# imgG = img.copy()
-# imgG[:,:,0] = 0
-# imgG[:,:,2] = 0
-# cv.imshow('imgG',imgG)
-
-# imgB_gray = img[:,:,0]
-# cv.imshow('imgB_gray',imgB_gray)
-
-# imgG_gray = img[:,:,1]
-# cv.imshow('imgG_gray',imgG_gray)
-
-
-# imgR_gray = img[:,:,2]
-# cv.imshow('imgR_gray',imgR_gray)
-
-
-
-
-img_Prom = np.uint8((np.double(img[:,:,0]) + np.double(img[:,:,1]) + np.double(img[:,:,2]))/ 3)
-img_uma = np.uint8(((np.double(img[:,:,0]) * 0.11) + (np.double(img[:,:,1]) * 0.59) + (np.double(img[:,:,2]) * 0.3))/ 3)
-
-cv.imshow('img_Prom',img_Prom)
-cv.imshow('img_uma',img_uma)
+rows = np.size(img,axis=0)
+cols = np.size(img,axis=1)
+imgDesa = np.zeros([rows,cols])
+imgDesaMin = np.zeros([rows,cols])
+imgDesaMax = np.zeros([rows,cols])
+for x in range(rows):
+    for y in range(cols):
+        imgDesaMin[x,y] = np.double(min(img[x,y,0],img[x,y,1],img[x,y,2]))
+        imgDesaMax[x,y] = np.double(max(img[x,y,0],img[x,y,1],img[x,y,2]))
+        pixel = (np.double(max(img[x,y,0],img[x,y,1],img[x,y,2]) + min(img[x,y,0],img[x,y,1],img[x,y,2]))) / 2
+        imgDesa[x,y] = pixel
+imgDesa = np.uint8(imgDesa)
+imgDesaMin = np.uint8(imgDesaMin)
+imgDesaMax = np.uint8(imgDesaMax)
+cv.imshow('imgDesa',imgDesa)
+cv.imshow('imgDesaMin',imgDesaMin)
+cv.imshow('imgDesaMax',imgDesaMax)
 cv.waitKey(0) 
